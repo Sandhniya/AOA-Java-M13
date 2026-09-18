@@ -1,6 +1,6 @@
 
 # EX 3B Rat in Maze- Backtracking 
-## DATE:
+## DATE:13.08.26
 ## AIM:
 To write a Java program to for given constraints.
 here is a ball in a maze with empty spaces (represented as 0) and walls (represented as 1). The ball can go through the empty spaces by rolling up, down, left or right, but it won't stop rolling until hitting a wall. When the ball stops, it could choose the next direction.
@@ -15,23 +15,85 @@ Explanation: One possible way is : left -> down -> left -> down -> right -> down
 
 
 ## Algorithm
-1. 
-2. 
-3. 
-4.  
-5.   
+1.Use DFS to explore all possible stopping points where the ball rolls until hitting a wall.
+2.From the start position, roll the ball in all four directions until it reaches a wall.
+3.Once the ball stops, recursively explore from that new stopping point.
+4.Maintain a visited matrix to avoid revisiting the same stop point.
+5.If the destination is reached, return true; if all possibilities are exhausted, return false.
 
 ## Program:
 ```
 /*
 Program to implement Reverse a String
-Developed by: 
-Register Number:  
+Developed by: SANDHIYA SREE B
+Register Number:  212223220093
 */
 ```
+```
+import java.util.*;
 
+public class Main {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int m = sc.nextInt();
+        int n = sc.nextInt();
+
+        int[][] maze = new int[m][n];
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                maze[i][j] = sc.nextInt();
+            }
+        }
+
+        int[] start = new int[]{sc.nextInt(), sc.nextInt()};
+        int[] destination = new int[]{sc.nextInt(), sc.nextInt()};
+
+        Solution sol = new Solution();
+        boolean result = sol.hasPath(maze, start, destination);
+
+        System.out.println(result);
+    }
+}
+
+class Solution {
+    private final int[][] dirs = {{1,0},{-1,0},{0,1},{0,-1}};
+
+    public boolean hasPath(int[][] maze,int[] start,int[] dest){
+        int m=maze.length,n=maze[0].length;
+        boolean[][] visited = new boolean[m][n];
+        return dfs(m,n,maze,start,dest,visited);
+    }
+
+    public boolean isvalid(int x,int y,int[][] maze){
+        return x>=0 && x<maze.length && y>=0 && y<maze[0].length && maze[x][y]==0;
+    }
+
+    public boolean dfs(int m, int n, int[][] maze, int[] curr, int[] dest, boolean[][] visited) {
+        if(visited[curr[0]][curr[1]]) return false;
+        if(curr[0] == dest[0] && curr[1] == dest[1]) return true;
+
+        visited[curr[0]][curr[1]] = true;
+
+        for(int[] d : dirs){
+            int x = curr[0], y = curr[1];
+
+            while(isvalid(x + d[0], y + d[1], maze)){
+                x += d[0];
+                y += d[1];
+            }
+
+            if(dfs(m, n, maze, new int[]{x, y}, dest, visited)) return true;
+        }
+
+        return false;
+    }
+}
+```
 ## Output:
 
+<img width="404" height="546" alt="image" src="https://github.com/user-attachments/assets/b48d27bb-d41c-46f6-9961-abac0ee56662" />
 
 
 ## Result:
